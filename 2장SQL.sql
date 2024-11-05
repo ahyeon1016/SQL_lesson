@@ -149,11 +149,14 @@ SELECT mem_name, addr
 SELECT * 
 	FROM member
     WHERE mem_name LIKE '__핑_';
-    
+
+SELECT mem_name, height FROM member
+	WHERE height > (SELECT height FROM member WHERE mem_name='에이핑크');
+
 SELECT mem_id, mem_name, debut_date
 	FROM member
     ORDER BY debut_date;
-    
+
 SELECT mem_id, mem_name, debut_date
 	FROM member
     ORDER BY debut_date DESC;
@@ -173,5 +176,110 @@ SELECT mem_name, height
     ORDER BY height DESC
     LIMIT 1, 4;
     
-SELECT addr FROM member ORDER BY addr ;
-SELECT DISTINCT addr FROM member;
+SELECT addr 
+	FROM member 
+	ORDER BY addr;
+SELECT DISTINCT addr 
+	FROM member;
+
+SELECT mem_id, amount 
+	FROM buy 
+	ORDER BY mem_id;
+
+SELECT mem_id, SUM(amount) AS amount_SUM 
+	FROM buy 
+    GROUP BY mem_id;
+
+SELECT mem_id, SUM(amount*price) AS price_SUM 
+	FROM buy 
+    GROUP BY mem_id;
+
+SELECT AVG(amount) AS '평균 구매 개수' 
+	FROM buy;
+
+SELECT mem_id, AVG(amount) AS '평균 구매 개수' 
+	FROM buy
+    GROUP BY mem_id;
+
+SELECT COUNT(*) 
+	FROM member;
+
+SELECT COUNT(phone1) AS '연락처가 있는 회원' 
+	FROM member;
+    
+SELECT mem_id AS '회원 아이디', SUM(price*amount) AS '총 구매 금액', SUM(amount) AS '구매 횟수'
+	FROM buy
+    GROUP BY mem_id;
+
+SELECT mem_id AS '회원 이이디', SUM(price*amount) AS '총 구매 금액'
+	FROM buy
+    GROUP BY mem_id
+    HAVING SUM(price*amount) > 1000
+	ORDER BY SUM(price*amount);
+    
+CREATE TABLE hongong1 (
+	toy_id INT PRIMARY KEY,
+    toy_name VARCHAR(4),
+    age INT
+);
+
+INSERT INTO hongong1(age, toy_name, toy_id) VALUES(20, '우디', 1);
+INSERT INTO hongong1 VALUES(2, '으디', 21);
+
+SELECT * FROM hongong1;
+
+CREATE TABLE hongong2(
+	toy_id INT AUTO_INCREMENT PRIMARY KEY,
+    toy_name VARCHAR(4),
+    age INT
+);
+
+INSERT INTO hongong2 VALUES(NULL, '벫', 21);
+
+SELECT last_insert_id();
+SHOW TABLES;
+SELECT * FROM hongong2;
+
+ALTER TABLE hongong2 AUTO_INCREMENT=100;
+INSERT INTO hongong2 VALUES(NULL, '뱗벫', 15);
+
+SHOW GLOBAL variables;
+
+USE world;
+SELECT COUNT(*) FROM city;
+DESC city;
+SELECT * FROM city LIMIT 5;
+
+CREATE TABLE city_popul(
+	city_name VARCHAR(35),
+    population Int
+);
+
+INSERT INTO city_popul SELECT Name, Population FROM city;
+SELECT city_name FROM city_popul WHERE city_name='Seoul';
+
+UPDATE city_popul
+	SET city_name='서울'
+    WHERE city_name='Seoul';
+
+SELECT * 
+	FROM city_popul 
+    WHERE city_name='서울';
+
+UPDATE city_popul
+	SET city_name='뉴욕' 
+    WHERE city_name='New York';
+
+SELECT *
+	FROM city_popul
+    WHERE city_name='뉴욕';
+    
+UPDATE city_popul
+	SET city_name='서울';
+    
+SELECT * FROM city_popul;
+
+UPDATE city_popul SET Population = Population/10000;
+SELECT * FROM city_popul LIMIT 5;
+
+DELETE FROM city_popul;
