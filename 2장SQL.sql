@@ -149,3 +149,26 @@ SELECT mem_name, addr
 SELECT * 
 	FROM member
     WHERE mem_name LIKE '__핑_';
+    
+SELECT mem_id, mem_name, debut_date
+	FROM member
+    ORDER BY debut_date;
+    
+SELECT mem_id, mem_name, debut_date
+	FROM member
+    ORDER BY debut_date DESC;
+    
+SELECT mem_id, mem_name, debut_date, height
+	FROM member
+    WHERE height >= 164
+    ORDER BY height DESC;
+    
+SELECT mem_name, debut_date 
+	FROM member
+	ORDER BY debut_date
+	LIMIT 3;
+    
+SELECT mem_name, height
+	FROM member 
+    ORDER BY height DESC
+    LIMIT 1, 4;
