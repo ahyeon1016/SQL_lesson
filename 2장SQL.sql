@@ -172,3 +172,6 @@ SELECT mem_name, height
 	FROM member 
     ORDER BY height DESC
     LIMIT 1, 4;
+    
+SELECT addr FROM member ORDER BY addr ;
+SELECT DISTINCT addr FROM member;
