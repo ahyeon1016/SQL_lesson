@@ -282,4 +282,17 @@ SELECT * FROM city_popul;
 UPDATE city_popul SET Population = Population/10000;
 SELECT * FROM city_popul LIMIT 5;
 
+USE world;
+
+SELECT * FROM city_popul;
+
 DELETE FROM city_popul;
+
+DELETE FROM city_popul
+	WHERE city_name LIKE 'New%';
+
+DELETE FROM city_popul
+	WHERE city_name LIKE 'New%'
+	LIMIT 5;
+
+SELECT * FROM city_popul WHERE city_name LIKE 'New%';
