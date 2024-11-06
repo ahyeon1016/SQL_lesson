@@ -77,7 +77,7 @@ SELECT *
 		INNER JOIN buy B
         ON	M.mem_id = B.mem_id;
 
-SELECT *
+SELECT *	
 	FROM member M
 		LEFT JOIN buy B
         ON	M.mem_id = B.mem_id;
@@ -86,3 +86,65 @@ SELECT *
 	FROM member M
 		RIGHT JOIN buy B
         ON	M.mem_id = B.mem_id;
+        
+SELECT debut_date FROM member;
+
+DELIMITER $$
+CREATE PROCEDURE ifProc3()
+BEGIN
+	DECLARE debutDate DATE;
+    DECLARE curDate DATE;
+    DECLARE days INT;
+
+	SELECT debut_date INTO debutDate
+		FROM market_db.member
+        WHERE mem_id = 'APN';
+	
+    SET curDate = CURRENT_DATE();
+    SET days = DATEDIFF(curDate, debutDate);
+    
+    IF(days/365) >=5 THEN
+		SELECT CONCAT('데뷔한 지', days, '일이나 지났습니다. 핑순이들 축하합니다!.') AS 'ㅇㅁㄴㅇ';
+	ELSE 
+		SELECT CONCAT('데뷔한지', days, '일 밖세 안되었네요. 핑순이들 화이팅!') AS 'sadasd';
+	END IF;
+END $$
+DELIMITER ; 
+CALL ifProc3();
+
+SELECT mem_id, SUM(price*amount) AS '총 구매액'
+	FROM buy
+    GROUP BY mem_id;
+    
+SELECT mem_id, SUM(price*amount) AS '총 구매액'
+	FROM buy
+    GROUP BY mem_id
+	ORDER BY SUM(price*amount) DESC;
+
+SELECT B.mem_id, M.mem_name, SUM(price*amount) AS '총 구매액'
+	FROM buy B
+		INNER JOIN member M
+        ON B.mem_id = M.mem_id
+    GROUP BY B.mem_id
+	ORDER BY SUM(price*amount) DESC;
+    
+SELECT M.mem_id, M.mem_name, SUM(price*amount) AS '총 구매액'
+	FROM buy B
+		RIGHT OUTER JOIN member M
+        ON B.mem_id = M.mem_id
+    GROUP BY M.mem_id
+	ORDER BY SUM(price*amount) DESC;
+
+SELECT M.mem_id, M.mem_name, SUM(price*amount) AS '총 구매액',
+		CASE
+			WHEN (SUM(price*amount) >= 1500) THEN '최우수 고객'
+            WHEN (SUM(price*amount) >= 1000) THEN '우수 고객'
+            WHEN (SUM(price*amount) >= 1) THEN '일반 고객'
+            ELSE '유령 고객'
+		END AS '회원 등급'
+	FROM buy B
+		RIGHT OUTER JOIN member M
+        ON B.mem_id = M.mem_id
+    GROUP BY M.mem_id
+	ORDER BY SUM(price*amount) DESC;
+    
