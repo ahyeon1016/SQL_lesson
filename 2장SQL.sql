@@ -295,4 +295,6 @@ DELETE FROM city_popul
 	WHERE city_name LIKE 'New%'
 	LIMIT 5;
 
-SELECT * FROM city_popul WHERE city_name LIKE 'New%';
+SELECT * 
+	FROM city_popul 
+	WHERE city_name LIKE 'New%';
