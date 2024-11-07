@@ -89,6 +89,7 @@ SELECT *
         
 SELECT debut_date FROM member;
 
+DROP PROCEDURE IF EXISTS ifProc3;
 DELIMITER $$
 CREATE PROCEDURE ifProc3()
 BEGIN
@@ -104,9 +105,9 @@ BEGIN
     SET days = DATEDIFF(curDate, debutDate);
     
     IF(days/365) >=5 THEN
-		SELECT CONCAT('데뷔한 지', days, '일이나 지났습니다. 핑순이들 축하합니다!.') AS 'ㅇㅁㄴㅇ';
+		SELECT CONCAT('데뷔한 지', days, '일이나 지났습니다. 핑순이들 축하합니다!.') AS '메시지';
 	ELSE 
-		SELECT CONCAT('데뷔한지', days, '일 밖세 안되었네요. 핑순이들 화이팅!') AS 'sadasd';
+		SELECT CONCAT('데뷔한지', days, '일 밖세 안되었네요. 핑순이들 화이팅!') AS '메시지';
 	END IF;
 END $$
 DELIMITER ; 
@@ -148,3 +149,29 @@ SELECT M.mem_id, M.mem_name, SUM(price*amount) AS '총 구매액',
     GROUP BY M.mem_id
 	ORDER BY SUM(price*amount) DESC;
     
+DROP PROCEDURE IF EXISTS whileProc2;
+DELIMITER $$
+CREATE PROCEDURE whileProc2()
+BEGIN
+	DECLARE i INT;
+    DECLARE hap INT;
+    SET i = 1;
+    SET hap = 0;
+    
+    myWhile:
+    WHILE(i<=100)DO 
+		IF(i%4=0) THEN
+			SET i = i + 1;
+			ITERATE myWhile;
+		END IF;
+        SET hap = hap + 1;
+        IF(hap > 1000) THEN
+			LEAVE myWhile;
+		END IF;
+        SET i = i + 1;
+	END WHILE;
+    
+    SELECT '1부터 100까지의 합(4의 배수 제외), 1000 넘으면 종료 ==>' AS '합계', hap;
+END $$
+DELIMITER ;
+CALL whileProc2();
