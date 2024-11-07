@@ -138,6 +138,7 @@ DELETE FROM member WHERE mem_id='PINK';
 
 DESC buy;
 
+-- UNIQUE
 CREATE TABLE member(
 	mem_id VARCHAR(8) PRIMARY KEY,
     mem_name VARCHAR(8) NOT NULL,
@@ -149,6 +150,7 @@ INSERT INTO member VALUES('BLK', '블랙핑크', 110, '010','pink@gamil.com');
 INSERT INTO member VALUES('TWC', '트와이스', 167, NULL);
 INSERT INTO member VALUES('APN', '에이핑크', 164, 'pink@gamil.com'); -- 이메일 중복
 
+-- CHECK
 CREATE TABLE member(
 	mem_id VARCHAR(8) PRIMARY KEY,
     mem_name VARCHAR(8) NOT NULL,
@@ -161,6 +163,7 @@ ALTER TABLE member
 	ADD CONSTRAINT
 	CHECK(phone IN('02', '010'));
 
+-- DEFAULT
 CREATE TABLE member(
 	mem_id VARCHAR(8) PRIMARY KEY,
     mem_name VARCHAR(8) NOT NULL,
@@ -174,5 +177,5 @@ ALTER TABLE member
 ALTER COLUMN
 mem_name SET DEFAULT '벫';
 
-SELECT * FROM member;     
+SELECT * FROM member;     	
 
