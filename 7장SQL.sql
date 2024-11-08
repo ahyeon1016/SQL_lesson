@@ -86,7 +86,7 @@ BEGIN
 END $$
 DELIMITER ;
 
-CALL while_proc();
+CALL while_proc();user_proc2
 
 DELIMITER $$
 CREATE PROCEDURE dynamic_proc(
